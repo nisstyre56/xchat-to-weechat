@@ -79,17 +79,15 @@
     (lambda (key)
       (hash-ref hash key ""))))
 
-(define translate-val
-  (let ([hash (make-hash
-    (list
-      [cons "addresses" (lambda (val) (format "\"~a\"" val))]
-      [cons "realname" (lambda (val) (regexp-replace #px"\\s" val ""))]
-      [cons "username" (lambda (val) (regexp-replace #px"\\s" val ""))]))])
-    (lambda (prop val)
-      ((hash-ref hash
-                prop
-                (const identity))
-       val))))
+(define (translate-val prop val)
+  (match prop
+    ["addresses" (format "\"~a\"" val)]
+    ["realname" (regexp-replace #px"\\s" val "")]
+    ["username" (regexp-replace #px"\\s" val "")]
+    ["autoconnect" "on"]
+    [_ val]))
+
+
 
 (define (take-while pred xs)
   (cond
