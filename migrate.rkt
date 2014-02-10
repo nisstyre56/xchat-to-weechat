@@ -59,7 +59,8 @@
   (parse-file
     (file->string
       (string->path
-        "/home/wes/.xchat2/servlist_.conf"))))
+        (format "~a.xchat2/servlist_.conf" (path->string
+                                            (find-system-path 'home-dir))))))) 
 
 (define translate-prop
   (let ([hash (make-hash
